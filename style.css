@@ -1,0 +1,367 @@
+/* 1. Setup Dasar & Warna Pastel */
+:root {
+    --bg-top: #E1F5FE;
+    --bg-bottom: #B3E5FC;
+    --candy-pink: #FF69B4;
+    --candy-blue: #81D4FA;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    font-family: 'Fredoka One', cursive;
+    
+    min-height: 200vh; 
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* --- TOMBOL DISCORD (POJOK KANAN ATAS) --- */
+.discord-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 50; 
+    
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    
+    width: 45px;
+    height: 45px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    
+    -webkit-tap-highlight-color: transparent;
+}
+
+.discord-btn:hover {
+    transform: scale(1.15);
+    background: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.discord-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #5865F2;
+}
+
+/* --- INTRO OVERLAY --- */
+#intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; 
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.bubble-btn {
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    border: 3px solid #fff;
+    color: var(--candy-pink);
+    padding: 15px 60px;
+    font-size: 1.5rem;
+    font-family: 'Fredoka One', cursive;
+    cursor: pointer;
+    border-radius: 40px; 
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bubble-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.8);
+    background: #fff;
+}
+
+.bubble-btn:active {
+    transform: scale(0.95);
+}
+
+.hidden-intro {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* --- BACKGROUND LAYERS (FIXED) --- */
+#cloud-container, #sparkle-bg-container, #rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0; 
+    overflow: hidden;
+}
+
+#cloud-container { z-index: 0; }
+#sparkle-bg-container { z-index: 1; }
+#rain-container { z-index: 2; }
+
+.cloud {
+    position: absolute;
+    font-size: 80px; 
+    opacity: 0.6;
+    animation: floatCloud linear infinite;
+    filter: drop-shadow(0 5px 10px rgba(255,255,255,0.5));
+}
+
+@keyframes floatCloud {
+    0% { transform: translateX(-200px); }
+    100% { transform: translateX(110vw); }
+}
+
+.sparkle-bg {
+    position: absolute;
+    background: #fff;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 1)) 
+            drop-shadow(0 0 8px rgba(255, 182, 193, 0.6)); 
+    animation: twinkleStar ease-in-out infinite;
+}
+
+@keyframes twinkleStar {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.rain-item {
+    position: absolute;
+    top: -100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.85;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg) translateX(0); }
+    25% { transform: translateY(25vh) rotate(15deg) translateX(15px); }
+    50% { transform: translateY(50vh) rotate(-10deg) translateX(-10px); }
+    75% { transform: translateY(75vh) rotate(5deg) translateX(5px); }
+    100% { transform: translateY(110vh) rotate(0deg) translateX(0); opacity: 0.6; }
+}
+
+/* --- MAIN CONTENT WRAPPER --- */
+#main-content-wrapper {
+    z-index: 5; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    
+    text-align: center;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(176, 190, 197, 0.3);
+    border: 5px solid #fff;
+    backdrop-filter: blur(8px);
+    
+    width: 450px; 
+    
+    max-height: 90vh; 
+    overflow-y: hidden; 
+    
+    margin-top: 5vh; 
+    margin-bottom: 50px;
+    
+    animation: floatBox 6s ease-in-out infinite;
+}
+
+#main-content-wrapper::-webkit-scrollbar { width: 8px; }
+#main-content-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); border-radius: 10px; }
+#main-content-wrapper::-webkit-scrollbar-thumb { background: var(--candy-pink); border-radius: 10px; }
+
+.logo-container { 
+    margin-top: 15px; 
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.cinnamoroll-logo {
+    width: 180px; 
+    height: 180px;
+    object-fit: contain;
+    animation: bounce 2s infinite ease-in-out; 
+    filter: drop-shadow(0 10px 10px rgba(255, 182, 193, 0.5));
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes floatBox {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- TEKS CANDY UTAMA --- */
+h1.candy-text {
+    font-size: 2.2rem;
+    margin: 5px 0; 
+    line-height: 1.2;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(180deg, var(--candy-blue), var(--candy-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 3px 0px rgba(255,255,255,0.9));
+    animation: floatText 3s ease-in-out infinite;
+    overflow: hidden; 
+    flex-shrink: 0;
+}
+
+h1.candy-text::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255,255,255,0.9) 20%, transparent 20%);
+    background-size: 8px 8px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: textSparkleFlow 1.5s linear infinite;
+}
+
+@keyframes floatText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes textSparkleFlow {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 20px; }
+}
+
+.sub-text {
+    font-family: 'Fredoka One', cursive;
+    color: #81D4FA;
+    font-size: 1rem;
+    margin: 5px 0 15px 0; 
+    text-shadow: 1px 1px 0 #fff;
+    background: rgba(255,255,255,0.5);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    flex-shrink: 0;
+}
+
+/* --- STYLE SURAT / LETTER --- */
+.letter-container {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 2px dashed rgba(255, 105, 180, 0.3);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 0.95rem; 
+    line-height: 1.6;
+    color: var(--candy-blue); 
+    max-height: 300px; 
+    overflow-y: auto; 
+    position: relative;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.letter-container::-webkit-scrollbar {
+    width: 6px;
+}
+.letter-container::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.5);
+    border-radius: 10px;
+}
+.letter-container::-webkit-scrollbar-thumb {
+    background: var(--candy-blue);
+    border-radius: 10px;
+}
+
+.letter-header {
+    text-align: center;
+    color: var(--candy-pink);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+    padding-bottom: 5px;
+    position: sticky; 
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 2;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--candy-blue);
+    animation: blinkCursor 0.7s infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.signature {
+    text-align: right;
+    margin-top: 15px;
+    font-style: italic;
+    color: var(--candy-blue); 
+    font-size: 1.1rem;
+}
+
+@media (max-width: 500px) {
+    .cinnamoroll-logo { width: 140px; height: 140px; }
+    h1.candy-text { font-size: 1.6rem; }
+    #main-content-wrapper { 
+        padding: 20px; 
+        width: 90%; 
+        max-height: 95vh; 
+    }
+    .letter-container { 
+        font-size: 0.85rem; 
+        max-height: 250px; 
+    }
+}
